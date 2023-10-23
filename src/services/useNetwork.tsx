@@ -16,6 +16,7 @@ export interface Context {
   setNetwork: (network: string) => void;
 }
 
+//create a context with default values
 const Context = createContext<Context>({
   networks: [MAINNET, TESTNET],
   network: TESTNET,
@@ -24,6 +25,8 @@ const Context = createContext<Context>({
   },
 });
 
+//component that utilizes useState to manage the current network selection
+//and provides the network context to its children (networks, network, setNetwork)
 export const NetworkContext: FC<PropsWithChildren> = ({ children }) => {
   const [network, setNetwork] = useState(networks[0]);
   return (
@@ -39,8 +42,10 @@ export const NetworkContext: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
+//hook to get the current network
 export const useNetwork = () => useContext(Context);
 
+//component to render a dropdown for network selection
 export const NetworkSelect = () => {
   const { networks, network, setNetwork } = useNetwork();
   return (
